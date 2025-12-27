@@ -14,8 +14,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Normalize and validate URL
+    let normalizedUrl = url.trim();
+    if (!normalizedUrl.match(/^https?:\/\//i)) {
+      normalizedUrl = `https://${normalizedUrl}`;
+    }
+
+    try {
+      new URL(normalizedUrl);
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid URL format. Please enter a valid website address.' },
+        { status: 400 }
+      );
+    }
+
     // Scan the URL
-    const result = await scanUrl(url);
+    const result = await scanUrl(normalizedUrl);
 
     // Find or create site
     let site = await prisma.wcagSite.findFirst({
@@ -74,9 +89,33 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Scan error:', error);
+
+    // Provide user-friendly error messages
+    let errorMessage = 'Scan failed';
+    let statusCode = 500;
+
+    if (error instanceof Error) {
+      const msg = error.message.toLowerCase();
+      if (msg.includes('fetch failed') || msg.includes('enotfound') || msg.includes('getaddrinfo')) {
+        errorMessage = 'Unable to reach the website. Please check the URL and try again.';
+        statusCode = 400;
+      } else if (msg.includes('timeout') || msg.includes('etimedout')) {
+        errorMessage = 'The website took too long to respond. Please try again.';
+        statusCode = 408;
+      } else if (msg.includes('certificate') || msg.includes('ssl')) {
+        errorMessage = 'SSL certificate error. The website may have security issues.';
+        statusCode = 400;
+      } else if (msg.includes('invalid url') || msg.includes('invalid protocol')) {
+        errorMessage = 'Invalid URL format. Please enter a valid website address.';
+        statusCode = 400;
+      } else {
+        errorMessage = error.message;
+      }
+    }
+
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Scan failed' },
-      { status: 500 }
+      { error: errorMessage },
+      { status: statusCode }
     );
   }
 }

@@ -17,6 +17,21 @@ export function ScanForm({ onScanComplete, onScanStart }: ScanFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // Client-side URL validation
+    const trimmedUrl = url.trim();
+    if (!trimmedUrl) {
+      setError('Please enter a website URL');
+      return;
+    }
+
+    // Basic URL format check
+    const urlPattern = /^(https?:\/\/)?[\w.-]+\.[a-z]{2,}(\/.*)?$/i;
+    if (!urlPattern.test(trimmedUrl)) {
+      setError('Please enter a valid website URL (e.g., example.com)');
+      return;
+    }
+
     setIsScanning(true);
     onScanStart?.();
 
