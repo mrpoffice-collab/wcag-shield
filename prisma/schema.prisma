@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sites Site[]
+}
+
+model Site {
+  id        String   @id @default(cuid())
+  url       String
+  name      String?
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  scans Scan[]
+
+  @@index([userId])
+  @@index([url])
+}
+
+model Scan {
+  id                 String   @id @default(cuid())
+  siteId             String
+  site               Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  url                String
+  accessibilityScore Int
+  criticalCount      Int      @default(0)
+  seriousCount       Int      @default(0)
+  moderateCount      Int      @default(0)
+  minorCount         Int      @default(0)
+  totalViolations    Int      @default(0)
+  totalPasses        Int      @default(0)
+  pageTitle          String?
+  pageLanguage       String?
+  scanVersion        String   @default("1.0")
+
+  // WCAG Principle Breakdown (stored as JSON)
+  wcagBreakdown      String?  @db.Text
+
+  // Full violations data (stored as JSON)
+  violations         String?  @db.Text
+  passes             String?  @db.Text
+
+  createdAt          DateTime @default(now())
+
+  @@index([siteId])
+  @@index([createdAt])
+}
+
+model Lead {
+  id           String   @id @default(cuid())
+  email        String
+  url          String
+  scanId       String?
+  source       String?  // "scan", "signup", "outreach"
+  status       String   @default("new") // "new", "contacted", "converted", "unsubscribed"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+}
