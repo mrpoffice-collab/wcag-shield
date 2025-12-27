@@ -127,6 +127,16 @@ User can demonstrate a documented audit trail proving remediation efforts over t
 - [x] **QA-09:** Build completes without TypeScript errors ✓
 - [x] **QA-10:** Form validates input before submission ✓
 
+### UX Button Testing - 8/8 PASSED ✓
+- [x] **UX-01:** Scan button initiates scan and redirects to results ✓
+- [x] **UX-02:** Export PDF button downloads PDF file ✓ *Returns application/pdf with filename*
+- [x] **UX-03:** Email Report button shows prompt and calls API ✓ *Returns clear error if no API key*
+- [x] **UX-04:** New Scan button (dashboard) links to homepage ✓
+- [x] **UX-05:** Dashboard navigation link works (HTTP 200) ✓
+- [x] **UX-06:** View Report button links to correct scan page ✓
+- [x] **UX-07:** Recent Scans links navigate to scan results ✓
+- [x] **UX-08:** All CTA buttons link to valid pages (no 404s) ✓ *Fixed: /signup → /dashboard*
+
 ---
 
 ## Test Summary (December 27, 2025)
@@ -140,10 +150,11 @@ User can demonstrate a documented audit trail proving remediation efforts over t
 | Dashboard | 4 | 5 | ✓ FUNCTIONAL |
 | Audit Trail | 4 | 5 | ✓ FUNCTIONAL |
 | PDF Export | 6 | 6 | ✓ COMPLETE |
-| UI/UX | 7 | 7 | ✓ COMPLETE |
+| UI/UX Design | 7 | 7 | ✓ COMPLETE |
 | SEO | 4 | 5 | ✓ FUNCTIONAL |
 | QA / Bug Testing | 10 | 10 | ✓ COMPLETE |
-| **TOTAL** | **51** | **62** | **82% Pass Rate** |
+| UX Button Testing | 8 | 8 | ✓ COMPLETE |
+| **TOTAL** | **59** | **70** | **84% Pass Rate** |
 
 ### Key Achievements
 - Core WCAG scanning fully operational (9 checks implemented)

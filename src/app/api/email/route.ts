@@ -106,11 +106,11 @@ export async function POST(request: NextRequest) {
           </div>
 
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${appUrl}/signup" style="display: inline-block; background: #16a34a; color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600;">
-              Start Monitoring Your Site
+            <a href="${appUrl}/dashboard" style="display: inline-block; background: #16a34a; color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+              View Your Dashboard
             </a>
             <p style="color: #6b7280; font-size: 14px; margin-top: 10px;">
-              Get weekly scans, audit trail history, and court-ready compliance reports.
+              Track your scan history, audit trail, and download court-ready compliance reports.
             </p>
           </div>
 
