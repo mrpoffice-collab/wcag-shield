@@ -77,12 +77,12 @@ User can demonstrate a documented audit trail proving remediation efforts over t
 - [ ] **AUTH-03:** User session persists across page loads - *Deferred: Phase 2*
 - [ ] **AUTH-04:** User can log out - *Deferred: Phase 2*
 
-### Dashboard - 4/5 PASSED ✓
+### Dashboard - 5/5 PASSED ✓
 - [x] **DASH-01:** User sees list of their scanned sites ✓
 - [x] **DASH-02:** Each site shows latest scan date and score ✓
 - [x] **DASH-03:** User can view scan history for any site ✓
-- [x] **DASH-04:** User can trigger new scan from dashboard ✓
-- [ ] **DASH-05:** Dashboard shows trend (improving/declining) per site - *Not implemented*
+- [x] **DASH-04:** User can trigger new scan from dashboard ✓ *Added Re-scan button per site*
+- [x] **DASH-05:** Dashboard shows trend (improving/declining) per site ✓ *TrendingUp/Down icons*
 
 ### Audit Trail - 4/5 PASSED ✓
 - [x] **AUDIT-01:** Every scan is timestamped and stored ✓
@@ -139,22 +139,24 @@ User can demonstrate a documented audit trail proving remediation efforts over t
 - [x] **UX-DB-01:** Logo link → / ✓ *HTTP 200*
 - [x] **UX-DB-02:** "New Scan" button → / ✓ *HTTP 200*
 - [x] **UX-DB-03:** "Scan Your First Site" button (empty state) → / ✓
-- [x] **UX-DB-04:** "View Report" buttons → /scan/[id] ✓ *HTTP 200*
-- [x] **UX-DB-05:** Recent Scans links → /scan/[id] ✓ *HTTP 200*
+- [x] **UX-DB-04:** "Re-scan" button per site → /?url=... ✓ *NEW: Pre-fills URL*
+- [x] **UX-DB-05:** "View Report" buttons → /scan/[id] ✓ *HTTP 200*
+- [x] **UX-DB-06:** Recent Scans links → /scan/[id] ✓ *HTTP 200*
 
-#### Scan Results (/scan/[id]) - 7+ interactive elements
+#### Scan Results (/scan/[id]) - 8+ interactive elements
 - [x] **UX-SR-01:** Logo link → / ✓ *HTTP 200*
 - [x] **UX-SR-02:** Dashboard link → /dashboard ✓ *HTTP 200*
-- [x] **UX-SR-03:** "Export PDF" button downloads PDF ✓ *Content-Type: application/pdf*
-- [x] **UX-SR-04:** "Email Report" button shows prompt, calls API ✓
-- [x] **UX-SR-05:** "View Dashboard" CTA → /dashboard ✓ *Fixed from /signup*
-- [x] **UX-SR-06:** Violation cards expand/collapse ✓ *Client-side JS*
-- [x] **UX-SR-07:** "Learn more" links → w3.org WCAG docs ✓ *HTTP 200*
+- [x] **UX-SR-03:** "Re-scan" button → /?url=... ✓ *NEW: Pre-fills URL*
+- [x] **UX-SR-04:** "Export PDF" button downloads PDF ✓ *Content-Type: application/pdf*
+- [x] **UX-SR-05:** "Email Report" button shows prompt, calls API ✓
+- [x] **UX-SR-06:** "View Dashboard" CTA → /dashboard ✓ *Fixed from /signup*
+- [x] **UX-SR-07:** Violation cards expand/collapse ✓ *Client-side JS*
+- [x] **UX-SR-08:** "Learn more" links → w3.org WCAG docs ✓ *HTTP 200*
 
 #### 404 Page - Default Next.js
 - [x] **UX-404-01:** Uses Next.js default 404 handler ✓
 
-**Total: 18 buttons/links tested across all pages**
+**Total: 21 buttons/links tested across all pages**
 
 ---
 
@@ -166,14 +168,14 @@ User can demonstrate a documented audit trail proving remediation efforts over t
 | Report Display | 5 | 5 | ✓ COMPLETE |
 | Email System | 1 | 5 | ⚠ API key required |
 | Authentication | 0 | 4 | ⏸ Deferred to Phase 2 |
-| Dashboard | 4 | 5 | ✓ FUNCTIONAL |
+| Dashboard | 5 | 5 | ✓ COMPLETE |
 | Audit Trail | 4 | 5 | ✓ FUNCTIONAL |
 | PDF Export | 6 | 6 | ✓ COMPLETE |
 | UI/UX Design | 7 | 7 | ✓ COMPLETE |
 | SEO | 4 | 5 | ✓ FUNCTIONAL |
 | QA / Bug Testing | 10 | 10 | ✓ COMPLETE |
-| UX Button Testing | 18 | 18 | ✓ COMPLETE |
-| **TOTAL** | **69** | **80** | **86% Pass Rate** |
+| UX Button Testing | 21 | 21 | ✓ COMPLETE |
+| **TOTAL** | **73** | **83** | **88% Pass Rate** |
 
 ### Key Achievements
 - Core WCAG scanning fully operational (9 checks implemented)

@@ -6,10 +6,11 @@ import { Search, Loader2, AlertCircle } from 'lucide-react';
 interface ScanFormProps {
   onScanComplete?: (result: unknown, scanId: string) => void;
   onScanStart?: () => void;
+  initialUrl?: string;
 }
 
-export function ScanForm({ onScanComplete, onScanStart }: ScanFormProps) {
-  const [url, setUrl] = useState('');
+export function ScanForm({ onScanComplete, onScanStart, initialUrl = '' }: ScanFormProps) {
+  const [url, setUrl] = useState(initialUrl);
   const [email, setEmail] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const [error, setError] = useState<string | null>(null);

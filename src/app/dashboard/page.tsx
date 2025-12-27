@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/db';
-import { Shield, Globe, Clock, TrendingUp, TrendingDown, Minus, ExternalLink } from 'lucide-react';
+import { Shield, Globe, Clock, TrendingUp, TrendingDown, Minus, ExternalLink, RefreshCw } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -145,6 +145,13 @@ export default async function DashboardPage() {
                       )}
 
                       <div className="flex gap-2">
+                        <Link
+                          href={`/?url=${encodeURIComponent(site.url)}`}
+                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1"
+                        >
+                          <RefreshCw className="w-4 h-4" />
+                          Re-scan
+                        </Link>
                         {latestScan && (
                           <Link
                             href={`/scan/${latestScan.id}`}

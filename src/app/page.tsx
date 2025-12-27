@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { ScanForm } from '@/components/ScanForm';
 import { ScanResults } from '@/components/ScanResults';
-import { Shield, CheckCircle, FileText, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Shield, CheckCircle, FileText, TrendingUp, AlertTriangle, Loader2 } from 'lucide-react';
 
 interface ScanResult {
   id?: string;
@@ -35,7 +36,10 @@ interface ScanResult {
   pageLanguage: string;
 }
 
-export default function Home() {
+function HomeContent() {
+  const searchParams = useSearchParams();
+  const initialUrl = searchParams.get('url') || '';
+
   const [result, setResult] = useState<ScanResult | null>(null);
   const [scanId, setScanId] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
@@ -113,6 +117,7 @@ export default function Home() {
             <ScanForm
               onScanComplete={handleScanComplete}
               onScanStart={() => setIsScanning(true)}
+              initialUrl={initialUrl}
             />
           </div>
         </div>
@@ -211,5 +216,21 @@ export default function Home() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <HomeContent />
+    </Suspense>
   );
 }

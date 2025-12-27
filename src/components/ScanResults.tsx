@@ -2,7 +2,7 @@
 
 import { ScoreGauge } from './ScoreGauge';
 import { ViolationCard } from './ViolationCard';
-import { CheckCircle2, XCircle, Download, Mail, Clock, Globe } from 'lucide-react';
+import { CheckCircle2, XCircle, Download, Mail, Clock, Globe, RefreshCw } from 'lucide-react';
 
 interface WcagBreakdown {
   perceivable: { violations: number; score: number };
@@ -107,6 +107,13 @@ export function ScanResults({ result, scanId }: ScanResultsProps) {
             )}
           </div>
           <div className="flex gap-2">
+            <a
+              href={`/?url=${encodeURIComponent(result.url)}`}
+              className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 flex items-center gap-2 transition-colors"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Re-scan
+            </a>
             {scanId && (
               <button
                 onClick={handleExportPDF}
