@@ -115,6 +115,18 @@ User can demonstrate a documented audit trail proving remediation efforts over t
 - [x] **SEO-04:** robots.txt allows crawling ✓ *User-agent: * / Allow: /*
 - [ ] **SEO-05:** SEO score >= 70 (via crawl-simulator) - *Not tested*
 
+### QA / Bug Testing - 10/10 PASSED ✓
+- [x] **QA-01:** Homepage loads without errors (HTTP 200) ✓
+- [x] **QA-02:** Dashboard loads without errors (HTTP 200) ✓
+- [x] **QA-03:** Scan results page loads for valid IDs ✓
+- [x] **QA-04:** 404 returned for invalid scan IDs ✓
+- [x] **QA-05:** API returns user-friendly error for invalid URLs ✓ *"Invalid URL format..."*
+- [x] **QA-06:** API returns user-friendly error for unreachable sites ✓ *"Unable to reach..."*
+- [x] **QA-07:** API returns clear error for missing URL ✓ *"URL is required"*
+- [x] **QA-08:** URL normalization works (auto-adds https://) ✓ *"example.com" → "https://example.com"*
+- [x] **QA-09:** Build completes without TypeScript errors ✓
+- [x] **QA-10:** Form validates input before submission ✓
+
 ---
 
 ## Test Summary (December 27, 2025)
@@ -130,7 +142,8 @@ User can demonstrate a documented audit trail proving remediation efforts over t
 | PDF Export | 6 | 6 | ✓ COMPLETE |
 | UI/UX | 7 | 7 | ✓ COMPLETE |
 | SEO | 4 | 5 | ✓ FUNCTIONAL |
-| **TOTAL** | **41** | **52** | **79% Pass Rate** |
+| QA / Bug Testing | 10 | 10 | ✓ COMPLETE |
+| **TOTAL** | **51** | **62** | **82% Pass Rate** |
 
 ### Key Achievements
 - Core WCAG scanning fully operational (9 checks implemented)
@@ -138,6 +151,8 @@ User can demonstrate a documented audit trail proving remediation efforts over t
 - Dashboard shows sites, scores, dates
 - Audit trail preserved in PostgreSQL database
 - Design rules fully compliant (no grey fonts, no purple, light backgrounds)
+- Robust error handling with user-friendly messages
+- URL normalization (auto-adds https://)
 
 ### Items for Phase 2
 - User authentication (AUTH-01 through AUTH-04)
