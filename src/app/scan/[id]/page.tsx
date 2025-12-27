@@ -11,7 +11,7 @@ interface PageProps {
 export default async function ScanPage({ params }: PageProps) {
   const { id } = await params;
 
-  const scan = await prisma.scan.findUnique({
+  const scan = await prisma.wcagScan.findUnique({
     where: { id },
     include: { site: true },
   });
@@ -71,7 +71,7 @@ export default async function ScanPage({ params }: PageProps) {
 
 export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
-  const scan = await prisma.scan.findUnique({ where: { id } });
+  const scan = await prisma.wcagScan.findUnique({ where: { id } });
 
   if (!scan) {
     return { title: 'Scan Not Found - WCAG Shield' };

@@ -19,7 +19,7 @@ interface SiteWithScans {
 }
 
 export default async function DashboardPage() {
-  const sites: SiteWithScans[] = await prisma.site.findMany({
+  const sites: SiteWithScans[] = await prisma.wcagSite.findMany({
     include: {
       scans: {
         orderBy: { createdAt: 'desc' },

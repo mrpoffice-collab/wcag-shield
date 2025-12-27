@@ -7,35 +7,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model WcagUser {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  sites Site[]
+  sites WcagSite[]
+
+  @@map("wcag_users")
 }
 
-model Site {
+model WcagSite {
   id        String   @id @default(cuid())
   url       String
   name      String?
   userId    String?
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      WcagUser?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  scans Scan[]
+  scans WcagScan[]
 
   @@index([userId])
   @@index([url])
+  @@map("wcag_sites")
 }
 
-model Scan {
+model WcagScan {
   id                 String   @id @default(cuid())
   siteId             String
-  site               Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  site               WcagSite     @relation(fields: [siteId], references: [id], onDelete: Cascade)
   url                String
   accessibilityScore Int
   criticalCount      Int      @default(0)
@@ -59,9 +62,10 @@ model Scan {
 
   @@index([siteId])
   @@index([createdAt])
+  @@map("wcag_scans")
 }
 
-model Lead {
+model WcagLead {
   id           String   @id @default(cuid())
   email        String
   url          String
@@ -73,4 +77,5 @@ model Lead {
 
   @@index([email])
   @@index([status])
+  @@map("wcag_leads")
 }

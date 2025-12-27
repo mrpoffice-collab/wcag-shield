@@ -18,12 +18,12 @@ export async function POST(request: NextRequest) {
     const result = await scanUrl(url);
 
     // Find or create site
-    let site = await prisma.site.findFirst({
+    let site = await prisma.wcagSite.findFirst({
       where: { url: result.url },
     });
 
     if (!site) {
-      site = await prisma.site.create({
+      site = await prisma.wcagSite.create({
         data: {
           url: result.url,
           name: result.pageTitle,
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Store the scan
-    const scan = await prisma.scan.create({
+    const scan = await prisma.wcagScan.create({
       data: {
         siteId: site.id,
         url: result.url,
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
     // If email provided, capture as lead
     if (email) {
-      await prisma.lead.create({
+      await prisma.wcagLead.create({
         data: {
           email,
           url: result.url,

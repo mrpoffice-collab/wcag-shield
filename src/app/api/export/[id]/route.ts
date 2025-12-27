@@ -10,7 +10,7 @@ export async function GET(
   try {
     const { id } = await params;
 
-    const scan = await prisma.scan.findUnique({
+    const scan = await prisma.wcagScan.findUnique({
       where: { id },
       include: { site: true },
     });
