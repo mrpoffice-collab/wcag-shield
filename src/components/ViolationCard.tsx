@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, AlertTriangle, AlertCircle, Info, ExternalLink } from 'lucide-react';
+import { ChevronDown, ChevronUp, AlertTriangle, AlertCircle, Info, ExternalLink, Wrench, Clock, CheckCircle2 } from 'lucide-react';
+import { SHOPIFY_FIXES, type ShopifyFix } from '@/lib/shopify-fixes';
 
 interface ViolationNode {
   html: string;
@@ -25,6 +26,16 @@ interface ViolationCardProps {
 
 export function ViolationCard({ violation }: ViolationCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showFix, setShowFix] = useState(true);
+
+  // Get Shopify-specific fix instructions
+  const shopifyFix: ShopifyFix | undefined = SHOPIFY_FIXES[violation.id];
+
+  const difficultyStyles = {
+    easy: 'bg-green-100 text-green-700',
+    medium: 'bg-yellow-100 text-yellow-700',
+    hard: 'bg-red-100 text-red-700',
+  };
 
   const impactStyles = {
     critical: {
@@ -90,6 +101,95 @@ export function ViolationCard({ violation }: ViolationCardProps) {
 
       {isExpanded && (
         <div className="border-t border-gray-200 bg-white p-4">
+          {/* Shopify Fix Instructions */}
+          {shopifyFix && (
+            <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
+              <button
+                onClick={() => setShowFix(!showFix)}
+                className="w-full flex items-center justify-between text-left"
+              >
+                <div className="flex items-center gap-2">
+                  <Wrench className="w-5 h-5 text-green-600" />
+                  <h4 className="font-semibold text-gray-900">How to Fix This (Shopify DIY)</h4>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`px-2 py-0.5 text-xs font-medium rounded ${difficultyStyles[shopifyFix.difficulty]}`}>
+                    {shopifyFix.difficulty}
+                  </span>
+                  <span className="text-xs text-gray-600 flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {shopifyFix.timeToFix}
+                  </span>
+                  {showFix ? <ChevronUp className="w-4 h-4 text-gray-600" /> : <ChevronDown className="w-4 h-4 text-gray-600" />}
+                </div>
+              </button>
+
+              {showFix && (
+                <div className="mt-4 space-y-4">
+                  {/* Why It Matters */}
+                  <div className="bg-white rounded-lg p-3 border border-green-100">
+                    <h5 className="font-medium text-gray-900 text-sm mb-1">Why This Matters</h5>
+                    <p className="text-sm text-gray-700">{shopifyFix.whyItMatters}</p>
+                  </div>
+
+                  {/* Step by Step Instructions */}
+                  {shopifyFix.steps.map((step, stepIdx) => (
+                    <div key={stepIdx} className="bg-white rounded-lg p-3 border border-green-100">
+                      <h5 className="font-medium text-gray-900 text-sm mb-2">{step.location}</h5>
+                      <ol className="list-decimal list-inside space-y-1">
+                        {step.instructions.map((instruction, instIdx) => (
+                          <li key={instIdx} className="text-sm text-gray-700">{instruction}</li>
+                        ))}
+                      </ol>
+                      {step.tip && (
+                        <p className="mt-2 text-sm text-green-700 bg-green-100 rounded p-2">
+                          <strong>Tip:</strong> {step.tip}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+
+                  {/* Examples */}
+                  {shopifyFix.examples.length > 0 && (
+                    <div className="bg-white rounded-lg p-3 border border-green-100">
+                      <h5 className="font-medium text-gray-900 text-sm mb-2">Examples</h5>
+                      <div className="space-y-3">
+                        {shopifyFix.examples.map((example, exIdx) => (
+                          <div key={exIdx} className="text-sm">
+                            <div className="flex items-start gap-2 mb-1">
+                              <span className="text-red-600 font-medium">Before:</span>
+                              <code className="bg-red-50 text-red-700 px-1 rounded text-xs">{example.before}</code>
+                            </div>
+                            <div className="flex items-start gap-2 mb-1">
+                              <span className="text-green-600 font-medium">After:</span>
+                              <code className="bg-green-50 text-green-700 px-1 rounded text-xs">{example.after}</code>
+                            </div>
+                            <p className="text-gray-600 text-xs ml-4">{example.explanation}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Can't Fix Warning */}
+                  {shopifyFix.cantFix && (
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                      <p className="text-sm text-amber-800">
+                        <strong>Note:</strong> {shopifyFix.cantFix}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Success Indicator */}
+                  <div className="flex items-center gap-2 text-sm text-gray-600 pt-2 border-t border-green-100">
+                    <CheckCircle2 className="w-4 h-4 text-green-600" />
+                    <span>After fixing, click <strong>Re-scan</strong> above to verify the fix worked.</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="mb-4">
             <div className="flex flex-wrap gap-2 mb-3">
               {violation.wcagTags.map((tag) => (
