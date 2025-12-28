@@ -81,6 +81,7 @@ wcag-shield/
 
 ## Scanner Checks (WCAG 2.1 AA)
 
+**Currently Implemented (9 rules):**
 1. **image-alt** - Images must have alt text (1.1.1)
 2. **link-name** - Links must have discernible text (2.4.4)
 3. **button-name** - Buttons must have accessible names (4.1.2)
@@ -90,6 +91,30 @@ wcag-shield/
 7. **empty-heading** - Headings must not be empty (1.3.1)
 8. **document-title** - Pages must have titles (2.4.2)
 9. **table-header** - Tables must have headers (1.3.1)
+
+**Rule Registry:** See `src/lib/wcag-rules.ts` for full rule catalog with:
+- All WCAG 2.0, 2.1, 2.2 rules tracked
+- Implementation status per rule
+- Coverage percentage calculation
+- Update recommendations
+
+## Self-Diagnostic API
+
+```bash
+GET /api/diagnostic
+```
+
+Returns:
+- Scanner version and target WCAG version
+- Coverage percentage (implemented vs. total rules)
+- Missing rules prioritized by impact
+- Update recommendations when new WCAG versions release
+- Specific suggestions (e.g., "Color contrast not implemented")
+
+**Use for:**
+- Periodic health checks
+- Roadmap prioritization
+- Compliance gap analysis
 
 ## Scoring
 
