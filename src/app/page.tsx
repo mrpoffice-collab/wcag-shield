@@ -170,9 +170,9 @@ function HomeContent() {
               <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="w-6 h-6 text-amber-600" />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Ongoing Monitoring</h3>
+              <h3 className="font-semibold text-gray-900 mb-2">Track Your Progress</h3>
               <p className="text-gray-700 text-sm">
-                Catch new violations before lawyers do. Weekly automated scans.
+                Re-scan anytime to measure improvements. Build evidence of ongoing remediation.
               </p>
             </div>
           </div>

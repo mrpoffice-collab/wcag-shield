@@ -228,7 +228,7 @@ export function ScanResults({ result, scanId }: ScanResultsProps) {
           Protect Your Business from ADA Lawsuits
         </h2>
         <p className="text-gray-700 mb-4">
-          Start monitoring your site and build a documented audit trail of compliance efforts.
+          Track your scans and build a documented audit trail of compliance efforts.
         </p>
         <a
           href="/dashboard"
